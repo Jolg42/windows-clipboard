@@ -31,14 +31,16 @@ before_deploy:
   - ps: ci\before_deploy.ps1
 
 deploy:
-  artifact: /.*\.zip/
-  auth_token:
-    secure: 4Zc68Y/452OvZYOiIygpVtDWa2H1nwjT4pm8v2J5VOu5nJWcr0ajTe1Ykx0eEXxb
-  description: ''
-  on:
-    RUST_VERSION: stable
-    appveyor_repo_tag: true
-  provider: GitHub
+  - provider: GitHub
+    artifact: /.*\.zip/
+    auth_token:
+      secure: GAVemcwm7SV2HtEFhLf2u2jz+aXtgy0dxS0nwFQYMMYicEBmhJKXdimRrR0S1/JmN9JYgVAZlor+3qvFAZn8kzSTgSxfJi/lUKLZuvQZcHwt6YkUiwcTmFHbb6I0Hxce
+    repository: Jolg42/windows-clipboard
+    draft: true
+    force_update: true
+    on:
+      RUST_VERSION: stable
+      appveyor_repo_tag: true
 
 # Building is done in the test phase, so we disable Appveyor's build phase.
 build: false
