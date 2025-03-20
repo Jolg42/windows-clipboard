@@ -1,6 +1,6 @@
 extern crate clipboard_win;
-use clipboard_win::get_clipboard_string;
-use clipboard_win::set_clipboard_string;
+
+use clipboard_win::{formats, get_clipboard, set_clipboard};
 
 use std::env;
 use std::io::{self, Read, Write};
@@ -21,12 +21,13 @@ fn help() {
 fn copy() -> std::io::Result<()> {
     let mut buffer = String::new();
     io::stdin().read_to_string(&mut buffer)?;
-    set_clipboard_string(&buffer)?;
+    let _ = set_clipboard(formats::Unicode, &buffer);
     Ok(())
 }
 
 fn paste() -> std::io::Result<()> {
-    io::stdout().write(&(get_clipboard_string()?).into_bytes())?;
+    let clipboard_content: String = get_clipboard(formats::Unicode).unwrap_or_default(); // Retrieve clipboard content as a String
+    io::stdout().write_all(clipboard_content.as_bytes())?; // Write the string to stdout
     Ok(())
 }
 
