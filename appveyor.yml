@@ -4,11 +4,12 @@ environment:
   global:
     RUST_VERSION: stable
     CRATE_NAME: windows-clipboard
+    CARGO_PROFILE_RELEASE_LTO: 'true'
 
   matrix:
-      # MSVC
-      - TARGET: i686-pc-windows-gnu
-      - TARGET: x86_64-pc-windows-gnu
+    # MSVC
+    - TARGET: i686-pc-windows-gnu
+    - TARGET: x86_64-pc-windows-gnu
 
 install:
   - curl -sSf -o rustup-init.exe https://win.rustup.rs/
@@ -20,12 +21,12 @@ install:
 test_script:
   # we don't run the "test phase" when doing deploys
   - if [%APPVEYOR_REPO_TAG%]==[false] (
-      cargo build --target %TARGET% --release &&
-      test.bat
+    cargo build --target %TARGET% --release &&
+    test.bat
     )
 
 before_deploy:
-  - cargo rustc --target %TARGET% --release --bin clipboard -- -C lto
+  - cargo rustc --target %TARGET% --release --bin clipboard
   - test.bat
   - ps: ci\before_deploy.ps1
 
