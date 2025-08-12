@@ -5,3 +5,8 @@ authors = ["Sindre Sorhus <sindresorhus@gmail.com>", "Vsevolod Strukchinsky <flo
 
 [dependencies]
 clipboard-win = "5.4.0"
+
+# https://github.com/johnthagen/min-sized-rust#optimize-for-size
+[profile.release]
+opt-level = "z"  # Optimize for size.
+lto = true

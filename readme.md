@@ -21,7 +21,17 @@ unicorn
 Install [`Rust`](https://rustup.rs) and run:
 
 ```sh
-cargo build --release
+rustup toolchain install stable
+
+# rustup toolchain install i686-pc-windows-gnu
+# rustup toolchain install x86_64-pc-windows-gnu
+
+brew install mingw-w64
+# rustup target add i686-pc-windows-gnu
+rustup target add x86_64-pc-windows-gnu
+
+# cargo build --target i686-pc-windows-gnu --release
+cargo build --target x86_64-pc-windows-gnu --release
 ```
 
 ## Related
